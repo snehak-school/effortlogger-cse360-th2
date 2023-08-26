@@ -1,0 +1,42 @@
+# IDE Generated Files
+.idea/
+build/
+out/
+target/
+*.iml
+*.ppf
+
+# Misc.
+*.class
+*.log
+*.out
+*.log.lck
+tmp/
+
+# Netbeans
+nbproject/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+nbactions.xml
+nb-configuration.xml
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.bak
+*.lnk
+
+# macOS
+.DS_Store
+._*
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
