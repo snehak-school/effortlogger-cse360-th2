@@ -21,7 +21,6 @@ public class DbLoginWrapper {
         this.conn = conn;
     }
 
-
     /**
      * Tries to login and returns the result of the login attempt.
      * <p>
@@ -87,6 +86,7 @@ public class DbLoginWrapper {
     public UserCreateStatus registerUser(String username, String password, int accessGroup) {
         try {
             if (username.isBlank()) {return UserCreateStatus.INVALID_USERNAME;}
+            if (isUsernameTaken(username)) {return UserCreateStatus.USERNAME_TAKEN;}
             if (password.length() < 8) {return UserCreateStatus.INVALID_PASSWORD;}
 
             var sql = "insert into users(token, name, pass_hash, consecutive_incorrect_pass, access_group) values(?, ?, ?, 0, ?)";
@@ -104,6 +104,20 @@ public class DbLoginWrapper {
         }
 
         return UserCreateStatus.UNKNOWN_ERROR;
+    }
+
+    /**
+     * Returns true is the given username already belongs to a registered user.
+     *
+     * @author Sneha Katragadda
+     */
+    private boolean isUsernameTaken(String username) throws SQLException {
+        var sql = "select * from users where name = ?";
+        var ps = conn.prepareStatement(sql);
+
+        ps.setString(1,username);
+        var r = ps.executeQuery();
+        return r.next();
     }
 
 }
