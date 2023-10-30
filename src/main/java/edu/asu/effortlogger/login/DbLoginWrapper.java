@@ -3,11 +3,13 @@ package edu.asu.effortlogger.login;
 import edu.asu.effortlogger.model.AuthStatus;
 import edu.asu.effortlogger.model.User;
 import edu.asu.effortlogger.model.UserAuthResult;
+import edu.asu.effortlogger.model.UserCreateStatus;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.UUID;
 
 public class DbLoginWrapper {
     private static final int MAX_LOGIN_ATTEMPTS = 3;
@@ -71,4 +73,37 @@ public class DbLoginWrapper {
         ps.setString(2, username);
         ps.execute();
     }
+
+
+    /**
+     * Attempts ot create a new user with the given credentials.
+     * <p>
+     * Fails for invalid input such as invalid password and repeating usernames.
+     * Passwords are only checked for length in accordance with
+     * <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html">owasp suggestions</a>
+     *
+     * @author Akshat Jain
+     */
+    public UserCreateStatus registerUser(String username, String password, int accessGroup) {
+        try {
+            if (username.isBlank()) {return UserCreateStatus.INVALID_USERNAME;}
+            if (password.length() < 8) {return UserCreateStatus.INVALID_PASSWORD;}
+
+            var sql = "insert into users(token, name, pass_hash, consecutive_incorrect_pass, access_group) values(?, ?, ?, 0, ?)";
+            var ps = conn.prepareStatement(sql);
+
+            ps.setString(1, UUID.randomUUID().toString());
+            ps.setString(2, username);
+            ps.setString(3, argon2.encode(password));
+            ps.setInt(4, accessGroup);
+
+            ps.execute();
+            return UserCreateStatus.SUCCESS;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return UserCreateStatus.UNKNOWN_ERROR;
+    }
+
 }
