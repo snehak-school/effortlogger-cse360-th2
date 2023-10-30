@@ -45,6 +45,8 @@ public class App extends Application {
             System.exit(1);
         }
 
+        backups.scheduleDailyBackup();
+
         setLoginScreen();
         stage.show();
     }
