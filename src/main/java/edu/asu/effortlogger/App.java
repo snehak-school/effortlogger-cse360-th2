@@ -2,6 +2,7 @@ package edu.asu.effortlogger;
 
 import edu.asu.effortlogger.backup.DataBackups;
 import edu.asu.effortlogger.login.LoginScreen;
+import edu.asu.effortlogger.poker.PlanningPoker;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -53,11 +54,12 @@ public class App extends Application {
 
     private void setWelcomeScreen() {
         var backupBtn = simpleButton("Backup and Restore", this::setBackupRestoreScreen);
+        var pokerBtn = simpleButton("Planning Poker", this::setPlanningPokerScreen);
         var logoutBtn = simpleButton("Logout", this::logout);
 
         VBox welcomeRoot = new VBox(10);
         welcomeRoot.setAlignment(Pos.CENTER);
-        welcomeRoot.getChildren().addAll(backupBtn, logoutBtn);
+        welcomeRoot.getChildren().addAll(backupBtn, pokerBtn, logoutBtn);
 
         mainStage.setTitle("Welcome");
         mainStage.setScene(new Scene(welcomeRoot, 300, 250));
@@ -69,6 +71,12 @@ public class App extends Application {
             conn = c;
             showAlertAndWait(Alert.AlertType.CONFIRMATION, "Restored from backup", "", "");
         }, this::setWelcomeScreen));
+    }
+
+    private void setPlanningPokerScreen() {
+        mainStage.setTitle("Planning Poker");
+        var p = new PlanningPoker();
+        mainStage.setScene(p.getScene(this::setWelcomeScreen));
     }
 
     private void setLoginScreen() {
