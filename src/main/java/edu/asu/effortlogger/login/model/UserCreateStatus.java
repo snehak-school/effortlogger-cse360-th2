@@ -1,4 +1,4 @@
-package edu.asu.effortlogger.model;
+package edu.asu.effortlogger.login.model;
 
 public enum UserCreateStatus {
     SUCCESS,

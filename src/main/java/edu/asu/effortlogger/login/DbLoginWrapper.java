@@ -1,9 +1,9 @@
 package edu.asu.effortlogger.login;
 
-import edu.asu.effortlogger.model.AuthStatus;
-import edu.asu.effortlogger.model.User;
-import edu.asu.effortlogger.model.UserAuthResult;
-import edu.asu.effortlogger.model.UserCreateStatus;
+import edu.asu.effortlogger.login.model.AuthStatus;
+import edu.asu.effortlogger.login.model.User;
+import edu.asu.effortlogger.login.model.UserAuthResult;
+import edu.asu.effortlogger.login.model.UserCreateStatus;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 
 import java.sql.Connection;

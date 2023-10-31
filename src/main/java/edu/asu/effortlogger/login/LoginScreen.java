@@ -1,6 +1,6 @@
 package edu.asu.effortlogger.login;
 
-import edu.asu.effortlogger.model.User;
+import edu.asu.effortlogger.login.model.User;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;

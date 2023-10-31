@@ -5,5 +5,5 @@ module edu.asu.effortlogger {
     requires org.xerial.sqlitejdbc;
 
     exports edu.asu.effortlogger;
-    exports edu.asu.effortlogger.model;
+    exports edu.asu.effortlogger.login.model;
 }
