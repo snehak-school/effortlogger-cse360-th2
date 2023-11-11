@@ -2,6 +2,7 @@ package edu.asu.effortlogger;
 
 import edu.asu.effortlogger.backup.DataBackups;
 import edu.asu.effortlogger.login.LoginScreen;
+import edu.asu.effortlogger.logs.DefectLogConsole;
 import edu.asu.effortlogger.logs.EffortLogConsole;
 import edu.asu.effortlogger.poker.PlanningPoker;
 import edu.asu.effortlogger.spe.StoryPointEstimate;
@@ -59,14 +60,15 @@ public class App extends Application {
         var pokerBtn = simpleButton("Planning Poker", this::setPlanningPokerScreen);
         var estBtn = simpleButton("Story Point Estimates", this::setStoryEstimatesScreen);
         var elcBtn = simpleButton("Effort Log Console", this::setEffortLogConsoleScreen);
+        var dlcBtn = simpleButton("Defect Log Console", this::setDefectLogConsoleScreen);
         var logoutBtn = simpleButton("Logout", this::logout);
 
         VBox welcomeRoot = new VBox(10);
         welcomeRoot.setAlignment(Pos.CENTER);
-        welcomeRoot.getChildren().addAll(backupBtn, pokerBtn, estBtn, elcBtn, logoutBtn);
+        welcomeRoot.getChildren().addAll(backupBtn, pokerBtn, estBtn, elcBtn, dlcBtn, logoutBtn);
 
         mainStage.setTitle("Welcome");
-        mainStage.setScene(new Scene(welcomeRoot, 300, 250));
+        mainStage.setScene(new Scene(welcomeRoot, 300, 700));
     }
 
     private void setBackupRestoreScreen() {
@@ -92,6 +94,11 @@ public class App extends Application {
     private void setEffortLogConsoleScreen() {
         mainStage.setTitle("Effort Log Console");
         mainStage.setScene(new EffortLogConsole(conn).getScene(this::setWelcomeScreen));
+    }
+
+    private void setDefectLogConsoleScreen() {
+        mainStage.setTitle("Defect Log Console");
+        mainStage.setScene(new DefectLogConsole(conn).getScene(this::setWelcomeScreen));
     }
 
     private void setLoginScreen() {

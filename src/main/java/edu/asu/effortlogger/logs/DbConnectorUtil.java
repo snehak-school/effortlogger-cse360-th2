@@ -352,6 +352,33 @@ public class DbConnectorUtil {
         return ret;
     }
 
+    /* creates a Defect in the database */
+    public int createDefect(int project, int category, int fixDef, String name,String info,String addDate, String removeDate)
+    {
+        project++;
+        if (dbConn == null) return -1;
+        try {
+            PreparedStatement cdPS = dbConn.prepareStatement("INSERT INTO defects (project,category,fixDef,name,info,addDate,removeDate) VALUES (?,?,?,?,?,?,?)");
+            cdPS.setInt(1, project);
+            cdPS.setInt(2, category);
+            cdPS.setInt(3, fixDef);
+
+            cdPS.setString(4, name);
+            cdPS.setString(5, info);
+            cdPS.setString(6, addDate);
+            cdPS.setString(7, removeDate);
+
+            cdPS.executeUpdate();
+            PreparedStatement maxIDPS = dbConn.prepareStatement("SELECT MAX(ID) FROM defects");
+            ResultSet rs = maxIDPS.executeQuery();
+            if (rs.next())
+                return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     /** creates a new Defect in the database */
     public int createDefect(int project)
     {
